@@ -2,8 +2,8 @@
 /**
  * Plugin Name: BuddyPress Mute
  * Plugin URI: https://github.com/henrywright/buddypress-mute
- * Description: Allow members to mute their friends and shed unwanted items from their BuddyPress activity stream.
- * Version: 1.0.0
+ * Description: Allow members to mute their friends and shed unwanted items from their BuddyPress site-wide activity stream.
+ * Version: 1.0.1
  * Author: Henry Wright
  * Author URI: http://about.me/henrywright
  * Text Domain: buddypress-mute
@@ -29,6 +29,10 @@ if ( ! defined( 'ABSPATH' ) )
  */
 function bp_mute_init() {
 
+	if ( ! bp_is_active( 'activity' ) ) {
+		return;
+	}
+
 	require dirname( __FILE__ ) . '/inc/loader.php';
 }
 add_action( 'bp_include', 'bp_mute_init' );
@@ -42,6 +46,10 @@ function bp_mute_js() {
 
 	if ( ! bp_mute_buddypress_exists() )
 		return;
+
+	if ( ! bp_is_active( 'activity' ) ) {
+		return;
+	}
 
 	if ( ! is_user_logged_in() )
 		return;
