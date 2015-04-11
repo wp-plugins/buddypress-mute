@@ -14,6 +14,9 @@ if ( ! defined( 'ABSPATH' ) )
  * Create a button.
  *
  * @since 1.0.0
+ *
+ * @param int $muted_id The ID of the muted user.
+ * @return string
  */
 function bp_mute_get_button( $muted_id ) {
 
@@ -70,7 +73,7 @@ function bp_mute_add_member_header_button() {
 add_action( 'bp_member_header_actions', 'bp_mute_add_member_header_button', 99 );
 
 /**
- * Output a button for each member.
+ * Output a button for each member in the loop.
  *
  * @since 1.0.0
  */
@@ -81,19 +84,6 @@ function bp_mute_add_member_dir_button() {
 	echo bp_mute_get_button( $members_template->member->id );
 }
 add_action( 'bp_directory_members_actions', 'bp_mute_add_member_dir_button', 99 );
-
-/**
- * Output a button for each member in the group.
- *
- * @since 1.0.0
- */
-function bp_mute_add_group_member_dir_button() {
-
-	global $members_template;
-
-	echo bp_mute_get_button( $members_template->member->user_id );
-}
-add_action( 'bp_group_members_list_item_action', 'bp_mute_add_group_member_dir_button', 99 );
 
 /**
  * Delete all mute records relating to a given user.
@@ -112,7 +102,7 @@ add_action( 'bp_core_deleted_account', 'bp_mute_delete' );
 /**
  * Start muting a user.
  *
- * Hooked to bp_actions, this function is used when js is disabled.
+ * This function is used when js is disabled.
  *
  * @since 1.0.0
  */
@@ -153,7 +143,7 @@ add_action( 'bp_actions', 'bp_mute_action_start' );
 /**
  * Stop muting a user.
  *
- * Hooked to bp_actions, this function is used when js is disabled.
+ * This function is used when js is disabled.
  *
  * @since 1.0.0
  */
@@ -286,6 +276,9 @@ add_filter( 'bp_activity_set_friends_scope_args', 'bp_mute_friends_activity_scop
  * Filter the members loop to show muted friends.
  *
  * @since 1.0.0
+ *
+ * @param array $r Arguments for changing the contents of the loop.
+ * @return array
  */
 function bp_mute_filter_members_friends( $r ) {
 
@@ -323,6 +316,9 @@ add_filter( 'bp_after_has_members_parse_args', 'bp_mute_filter_members_friends' 
  * Filter the members loop to show all muted users.
  *
  * @since 1.0.0
+ *
+ * @param array $r Arguments for changing the contents of the loop.
+ * @return array
  */
 function bp_mute_filter_members_all( $r ) {
 
